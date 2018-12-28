@@ -53,7 +53,37 @@
             <TextBlock Text="Enable Heater" Foreground="White" HorizontalAlignment="Stretch" Margin="26,11,-25,-11" VerticalAlignment="Stretch" FontFamily="arial" FontWeight="ExtraBlack"></TextBlock>
             <ToggleSwitch Toggled="ToggleSwitch_Toggled" x:Name="toggleSwitch" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="154" Margin="26,34,0,0" BorderBrush="White" Foreground="White" FocusVisualPrimaryBrush="White"/>
             <TextBlock Text="Set Heater Value" Foreground="White" FontFamily="arial" FontWeight="ExtraBlack" Margin="223,10,-223,-8" VerticalAlignment="Stretch"/>
-            <Slider ValueChanged="Slider_ValueChanged" x:Name="slider" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="197" Margin="223,40,0,0" StepFrequency="1" />
+            <Slider ValueChanged="Slider_ValueChanged" x:Name="slider" Minimum="30" Maximum="100" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="197" Margin="223,40,0,0" StepFrequency="1" />
+            <TextBlock x:Name="setHeaterValue" Text="{Binding ElementName=slider,Path=Value}"  Foreground="White" Margin="366,13,-364,-11" FontFamily="arial" FontWeight="ExtraBlack" />
+
+            <TextBlock Text="Current Sensor Value" Foreground="White" Margin="514,10,-513,-9" FontFamily="arial" FontWeight="ExtraBlack"/>
+            <TextBlock x:Name="currentReading" Text="35" Foreground="White" Margin="514,45,-512,-43" FontFamily="arial" FontWeight="ExtraBlack" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <ListView x:Name="Listview1" ItemsSource="{x:Bind Recordings}" Margin="26,94,-680,-360" Background="#FF2C358D" Foreground="White" FontWeight="Bold" Height="500" >
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid Padding="12" Background="{ThemeResource SystemBaseLowColor}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Register Address" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                            <TextBlock Grid.Column="1" Text="Register Value" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:Name="TableDataTemplate" x:DataType="local:Recording">
+                        <Grid Height="48" AutomationProperties.Name="{x:Bind RegisterAddress, Mode=TwoWay}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="{x:Bind RegisterAddress, Mode=TwoWay}" />
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Bind RegisterValue, Mode=TwoWay}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </RelativePanel>
     </Grid>
